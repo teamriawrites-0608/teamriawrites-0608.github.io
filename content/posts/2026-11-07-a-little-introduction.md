@@ -3,6 +3,7 @@ title: A Little Introduction
 date: 2026-11-07
 category: Personal Stories
 excerpt: "\tA little introduction to my world, stories and memories."
+cover_image: /uploads/8c91aef6-ff3e-4c73-8f71-fcb6f43c2a17.jpg
 published: false
 ---
 Welcome to my little corner of the internet!
