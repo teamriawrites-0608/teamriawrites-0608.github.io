@@ -1,0 +1,62 @@
+
+media:
+  input: uploads
+  output: /uploads
+  rename: safe
+  extensions: [jpg, jpeg, png, webp, gif]
+
+content:
+  - name: posts
+    label: Diary Articles
+    type: collection
+    path: content/posts
+    format: yaml-frontmatter
+    filename: "{year}-{month}-{day}-{primary}.md"
+    subfolders: false
+    view:
+      primary: title
+      fields: [title, date, category, published]
+      sort: date
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Article Title
+        type: string
+        required: true
+
+      - name: date
+        label: Publication Date
+        type: date
+        required: true
+
+      - name: category
+        label: Category
+        type: select
+        required: true
+        options:
+          values:
+            - Travel
+            - Lifestyle
+            - Food
+            - Memories
+            - Personal Stories
+            - Recommendations
+
+      - name: excerpt
+        label: Short Introduction
+        type: text
+
+      - name: cover_image
+        label: Cover Photograph
+        type: image
+
+      - name: published
+        label: Published
+        type: boolean
+
+      - name: body
+        label: Article Content
+        type: rich-text
+        required: true
