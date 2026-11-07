@@ -1,0 +1,17 @@
+---
+title: A Little Introduction
+date: 2026-11-07
+category: Personal Stories
+excerpt: "\tA little introduction to my world, stories and memories."
+published: false
+---
+Welcome to my little corner of the internet!
+
+This is a space where I will share pieces of my life, travel experiences, favourite discoveries, everyday moments and stories that mean something to me.
+
+Some memories are big, some are small, but every one of them has a story worth telling.
+
+I'm glad you're here.
+
+With love,  
+Ria ♡
