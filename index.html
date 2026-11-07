@@ -1,293 +1,76 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
-
 <head>
-
-  <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <meta name="description" content="RiaWrites - A collection of stories, travels and memories.">
-
-  <title>RiaWrites | Every Life Has a Story</title>
-
-  <style>
-
-    * {
-
-      margin: 0;
-
-      padding: 0;
-
-      box-sizing: border-box;
-
-    }
-
-    body {
-
-      font-family: Georgia, serif;
-
-      background: #f8f5ef;
-
-      color: #342e28;
-
-    }
-
-    header {
-
-      padding: 28px 8%;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      border-bottom: 1px solid #e8dfd3;
-
-    }
-
-    .logo {
-
-      font-size: 30px;
-
-      font-weight: bold;
-
-      letter-spacing: -1px;
-
-    }
-
-    nav a {
-
-      margin-left: 22px;
-
-      color: #342e28;
-
-      text-decoration: none;
-
-      font-size: 14px;
-
-    }
-
-    .hero {
-
-      min-height: 570px;
-
-      padding: 110px 10%;
-
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: center;
-
-      background: #eae0d3;
-
-    }
-
-    .hero small {
-
-      letter-spacing: 3px;
-
-      margin-bottom: 25px;
-
-    }
-
-    .hero h1 {
-
-      font-size: clamp(45px, 8vw, 82px);
-
-      max-width: 750px;
-
-      line-height: 1.08;
-
-      font-weight: normal;
-
-    }
-
-    .hero p {
-
-      margin-top: 25px;
-
-      font-size: 18px;
-
-      line-height: 1.8;
-
-      max-width: 550px;
-
-    }
-
-    .button {
-
-      margin-top: 35px;
-
-      padding: 15px 25px;
-
-      background: #493c30;
-
-      color: white;
-
-      text-decoration: none;
-
-      width: fit-content;
-
-    }
-
-    .section {
-
-      padding: 80px 8%;
-
-      text-align: center;
-
-    }
-
-    .section h2 {
-
-      font-size: 38px;
-
-      font-weight: normal;
-
-      margin-bottom: 20px;
-
-    }
-
-    .section p {
-
-      line-height: 1.8;
-
-      max-width: 650px;
-
-      margin: auto;
-
-    }
-
-    .footer {
-
-      padding: 30px;
-
-      text-align: center;
-
-      background: #342e28;
-
-      color: white;
-
-    }
-
-    @media(max-width: 600px) {
-
-      header {
-
-        flex-direction: column;
-
-        gap: 20px;
-
-      }
-
-      nav a {
-
-        margin: 0 7px;
-
-        font-size: 12px;
-
-      }
-
-      .hero {
-
-        min-height: 450px;
-
-        padding: 70px 8%;
-
-      }
-
-    }
-
-  </style>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f8f5ef" />
+  <meta name="description" content="Ria Writes — a little bit of everything. A little bit of me. Thoughts, experiences, recommendations and everything in between." />
+  <title>Ria Writes — A little bit of everything</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Allura&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
 </head>
-
 <body>
-
-  <header>
-
-    <div class="logo">riawrites.</div>
-
-    <nav>
-
-      <a href="#home">Home</a>
-
-      <a href="#about">About</a>
-
-      <a href="#stories">Stories</a>
-
+  <header class="site-header">
+    <a class="wordmark" href="#home" aria-label="Ria Writes home">Ria <span>Writes</span><i>♡</i></a>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#home">Home</a><a href="#about">About</a><a href="#diary">The diary</a><a href="#archive">Archive</a>
     </nav>
-
+    <a class="header-note" href="#newsletter">A little note for you <span>↗</span></a>
   </header>
 
-  <main>
-
-    <section class="hero" id="home">
-
-      <small>WELCOME TO RIAWRITES</small>
-
-      <h1>Every life has a story.</h1>
-
-      <p>
-
-        A little corner of the internet dedicated to
-
-        our journeys, experiences, beautiful memories
-
-        and everything that makes life special.
-
-      </p>
-
-      <a href="#stories" class="button">
-
-        Explore our stories →
-
-      </a>
-
+  <main id="home">
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="tiny-flower">✳</span> A PERSONAL JOURNAL BY RIA</p>
+        <h1>A little bit of<br />everything. <em>A little<br class="desktop-break" /> bit of me.</em></h1>
+        <p class="hero-intro">Thoughts, experiences, recommendations and everything in between. A little corner of the internet that feels like me. Glad you're here.</p>
+        <div class="hero-actions"><a class="button button-dark" href="#diary">Wander through my diary <span>↗</span></a><a class="text-link" href="#about">A little about me <span>↓</span></a></div>
+        <div class="hero-signature">with love, Ria <span>♡</span></div>
+      </div>
+      <div class="hero-art" aria-label="A sunlit journal, flowers and coffee on a desk">
+        <div class="art-frame"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1100&q=85" alt="" /></div>
+        <div class="photo-label"><span>somewhere between</span><strong>dreaming & doing</strong></div>
+        <span class="sun-doodle">✳</span><span class="art-heart">♡</span>
+      </div>
+      <div class="hero-bottom"><span>EST. 2026</span><span class="line"></span><span>MADE OF THOUGHTS & LITTLE THINGS</span></div>
     </section>
 
-    <section class="section" id="about">
+    <section class="intro-strip"><p>“ A diary for the big dreams <span>and</span> everyday moments. ”</p><span class="strip-flower">✿</span></section>
 
-      <h2>A little about us</h2>
-
-      <p>
-
-        Welcome to RiaWrites. This is a personal space
-
-        to document life's special moments, travel
-
-        experiences, stories and memories.
-
-      </p>
-
+    <section class="world wrap" id="diary">
+      <div class="section-heading"><div><p class="eyebrow">COME ON IN</p><h2>Explore my <em>world</em></h2></div><p class="section-aside">Different chapters, same me.<br />Find a little something that speaks to you.</p></div>
+      <div class="category-grid">
+        <a class="category-card card-rose" href="#latest" data-category="Dear Me"><span class="card-number">01 / HEART</span><span class="category-icon">♡</span><h3>Dear Me</h3><p>Growing, healing, learning to love myself and becoming.</p><span class="card-arrow">↗</span></a>
+        <a class="category-card card-sage" href="#latest" data-category="Work in Progress"><span class="card-number">02 / WORK</span><span class="category-icon">✳</span><h3>Work in Progress</h3><p>Career, business, B2B sales and lessons along the way.</p><span class="card-arrow">↗</span></a>
+        <a class="category-card card-butter" href="#latest" data-category="Little Things"><span class="card-number">03 / JOY</span><span class="category-icon">☼</span><h3>Little Things</h3><p>Favourite food, places, books, music and small discoveries.</p><span class="card-arrow">↗</span></a>
+        <a class="category-card card-lilac" href="#latest" data-category="Figuring It Out"><span class="card-number">04 / LIFE</span><span class="category-icon">✎</span><h3>Figuring It Out</h3><p>Life, ambition, mistakes and everything in between.</p><span class="card-arrow">↗</span></a>
+        <a class="category-card card-peach" href="#latest" data-category="Life Lately"><span class="card-number">05 / LATELY</span><span class="category-icon">☁</span><h3>Life Lately</h3><p>Days, memories, travels and moments worth keeping.</p><span class="card-arrow">↗</span></a>
+      </div>
     </section>
 
-    <section class="section" id="stories">
+    <section class="latest-section" id="latest"><div class="wrap">
+      <div class="section-heading latest-heading"><div><p class="eyebrow">FRESH FROM MY NOTEBOOK</p><h2>Recently, in my <em>world…</em></h2></div><a class="text-link" href="#archive">All the notes <span>↗</span></a></div>
+      <div class="filter-row" aria-label="Filter entries"><button class="filter active" data-filter="All">Everything</button><button class="filter" data-filter="Dear Me">Dear Me</button><button class="filter" data-filter="Work in Progress">Work</button><button class="filter" data-filter="Little Things">Little things</button><button class="filter" data-filter="Figuring It Out">Life</button></div>
+      <div class="post-grid">
+        <article class="post-card" data-category="Little Things"><a class="post-image food-image" href="#newsletter" aria-label="Read My top 5 comfort foods"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80" alt="A colourful table of favourite foods" /><span class="image-stamp">LITTLE<br />THINGS</span></a><p class="post-meta">LITTLE THINGS <span>·</span> 4 MIN READ</p><h3><a href="#newsletter">My top 5 comfort foods</a></h3><p class="post-description">A little list of things that make a hard day softer.</p><a class="read-more" href="#newsletter">Read the note <span>↗</span></a></article>
+        <article class="post-card" data-category="Work in Progress"><a class="post-image work-image" href="#newsletter" aria-label="Read five strategies to close B2B deals"><img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=80" alt="Colleagues sharing ideas around a table" /><span class="image-stamp">WORK IN<br />PROGRESS</span></a><p class="post-meta">WORK IN PROGRESS <span>·</span> 6 MIN READ</p><h3><a href="#newsletter">5 strategies to close B2B deals</a></h3><p class="post-description">Things I'm learning about business, listening and people.</p><a class="read-more" href="#newsletter">Read the note <span>↗</span></a></article>
+        <article class="post-card" data-category="Dear Me"><a class="post-image dear-image" href="#newsletter" aria-label="Read On learning to love yourself again"><img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80" alt="Soft morning sunlight falling over a quiet field" /><span class="image-stamp">DEAR<br />ME</span></a><p class="post-meta">DEAR ME <span>·</span> 5 MIN READ</p><h3><a href="#newsletter">On learning to love yourself again</a></h3><p class="post-description">A reminder that becoming yourself again takes time.</p><a class="read-more" href="#newsletter">Read the note <span>↗</span></a></article>
+      </div>
+      <p class="empty-state" hidden>No notes in this chapter just yet. Come back soon ♡</p>
+    </div></section>
 
-      <h2>Stories worth remembering</h2>
+    <section class="about-section wrap" id="about"><div class="about-photo"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=85" alt="A warm, candid portrait" /><span class="photo-caption">a little hello from me</span></div><div class="about-copy"><p class="eyebrow">THE PERSON BEHIND THE NOTES</p><h2>A little <em>about me</em></h2><p class="about-lede">I'm Ria — curious about a lot of things, always learning something, and occasionally overthinking everything.</p><p>I made this space to collect what I love, what I'm figuring out, and what I don't want to forget. Some days that's a work lesson; some days it's a really good meal. Think of it as a little diary for the big dreams and the everyday moments.</p><a class="button button-outline" href="mailto:your-email@example.com">Say hello <span>↗</span></a><span class="about-squiggle">Ria ♡</span></div></section>
 
-      <p>
+    <section class="quote-section"><span class="quote-mark">“</span><blockquote>Maybe you don't have to have it all figured out<br class="desktop-break" /> to write it all down.</blockquote><p>A NOTE TO MYSELF (AND MAYBE YOU)</p><span class="quote-flower">✿</span></section>
 
-        From places we visit to people we meet,
+    <section class="archive-section wrap" id="archive"><div class="section-heading"><div><p class="eyebrow">A LITTLE TIME CAPSULE</p><h2>The <em>archive</em></h2></div><p class="section-aside">Every note has a place.<br />Every season leaves a little something.</p></div><div class="archive-list"><a href="#latest"><span>2026</span><span>November <small>— the beginning</small></span><span class="archive-count">03 NOTES ↗</span></a><a href="#latest" class="future-link"><span>2026</span><span>December <small>— more to come</small></span><span class="archive-count">SOON ♡</span></a></div></section>
 
-        every experience deserves a place in our story.
-
-      </p>
-
-    </section>
-
+    <section class="newsletter" id="newsletter"><div class="newsletter-inner"><span class="newsletter-flower">✳</span><p class="eyebrow">A LITTLE LETTER, EVERY NOW & THEN</p><h2>Stay a little <em>longer</em> ♡</h2><p>Occasional notes from my world, delivered gently to your inbox.</p><form class="signup-form"><label class="sr-only" for="email">Your email address</label><input id="email" type="email" placeholder="Your email address" required /><button type="submit" aria-label="Subscribe">Count me in <span>↗</span></button></form><small class="form-note">Just a little note. Unsubscribe whenever you like.</small><p class="form-success" role="status" hidden>Thank you for stopping by ♡ The signup form is a demo for now.</p></div></section>
   </main>
-
-  <footer class="footer">
-
-    <p>© 2026 RiaWrites. All rights reserved.</p>
-
-  </footer>
-
+  <footer class="site-footer"><a class="wordmark" href="#home">Ria <span>Writes</span><i>♡</i></a><p>A little diary for the big dreams and everyday moments.</p><div class="footer-links"><a href="#home">Back to top ↑</a><a href="mailto:your-email@example.com">Contact</a></div><small>© 2026 Ria Writes · Made with a little love ♡</small></footer>
 </body>
-
 </html>
