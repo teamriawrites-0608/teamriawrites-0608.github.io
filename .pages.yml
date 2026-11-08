@@ -37,12 +37,11 @@ content:
         required: true
         options:
           values:
-            - Travel
-            - Lifestyle
-            - Food
-            - Memories
-            - Personal Stories
-            - Recommendations
+            - Dear Me
+            - Work in Progress
+            - Little Things
+            - Figuring It Out
+            - Life Lately
 
       - name: excerpt
         label: Short Introduction
