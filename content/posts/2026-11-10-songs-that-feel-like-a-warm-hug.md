@@ -4,7 +4,7 @@ date: 2026-11-10
 category: Little Things
 excerpt: A little reminder that sometimes, all you need is the right song to
   make life feel a little more beautiful.
-cover_image: /uploads/screenshot-2026-11-10-010555.png
+cover_image: /uploads/screenshot-2026-11-10-012408.png
 published: true
 ---
 *I have a little theory: sometimes, we don't choose a song because of how it sounds. We choose it because of how it makes us feel.*
