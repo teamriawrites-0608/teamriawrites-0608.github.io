@@ -7,17 +7,17 @@ excerpt: A little reminder that becoming yourself again doesn't have to happen
 cover_image: /uploads/screenshot-2026-11-09-233354-1.png
 published: true
 ---
-There are phases in life when you realise you've been giving so much of yourself to everything and everyone that you've somehow forgotten what it feels like to show up for yourself.
+*There are phases in life when you realise you've been giving so much of yourself to everything and everyone that you've somehow forgotten what it feels like to show up for yourself.*
 
-Maybe you've been too hard on yourself. Maybe you've spent too much time trying to be enough for other people. Maybe life simply happened, and somewhere along the way, you stopped treating yourself with the same kindness you so easily give to others.
+*Maybe you've been too hard on yourself. Maybe you've spent too much time trying to be enough for other people. Maybe life simply happened, and somewhere along the way, you stopped treating yourself with the same kindness you so easily give to others.*
 
-And then one day, you decide you want to feel like yourself again.
+*And then one day, you decide you want to feel like yourself again.*
 
-Not necessarily a completely different person. Just someone who feels a little more at peace, a little more confident, and a little more comfortable being who they are.
+*Not necessarily a completely different person. Just someone who feels a little more at peace, a little more confident, and a little more comfortable being who they are.*
 
-But where do you even begin?
+*But where do you even begin?*
 
-## 1. Stop treating yourself like a problem that needs fixing.
+**1. Stop treating yourself like a problem that needs fixing.**
 
 I think one of the biggest mistakes we make is believing that we need to become better, prettier, smarter, more successful or more confident before we deserve to feel good about ourselves.
 
@@ -29,7 +29,7 @@ You can want to improve your habits and still appreciate the person you are toda
 
 You are allowed to be a work in progress without treating yourself like unfinished business.
 
-## 2. Keep the little promises you make to yourself.
+**2. Keep the little promises you make to yourself.**
 
 Self-love isn't always about grand gestures or inspirational mornings.
 
@@ -43,7 +43,7 @@ And every time you don't, you don't need to punish yourself. You can simply begi
 
 The goal isn't perfection. It's learning that you can depend on yourself.
 
-## 3. Stop making your life a competition.
+**3. Stop making your life a competition.**
 
 It's surprisingly easy to look at someone else's life and suddenly feel like yours isn't moving fast enough.
 
@@ -59,7 +59,7 @@ You can celebrate someone else's happiness without using it as evidence that you
 
 There is room for other people to shine without making yourself smaller.
 
-## 4. Learn to enjoy your own company.
+**4. Learn to enjoy your own company.**
 
 One of the nicest things you can do for yourself is create a life that feels good even when nobody else is around.
 
@@ -71,7 +71,7 @@ Sometimes, a good day is simply a day you enjoyed living.
 
 And the more comfortable you become in your own company, the less you'll feel the need to constantly seek validation that you're doing life correctly.
 
-## 5. Get comfortable saying no.
+**5. Get comfortable saying no.**
 
 Not every opportunity deserves your yes. Not every person deserves unlimited access to your time. Not every expectation needs to become your responsibility.
 
@@ -85,7 +85,7 @@ Boundaries aren't about becoming cold or selfish. They're about recognising that
 
 And honestly, the people who genuinely care about you should be able to make room for your boundaries.
 
-## 6. Make room for things that make you feel alive.
+**6. Make room for things that make you feel alive.**
 
 Sometimes we become so focused on becoming productive, successful or responsible that we forget to have fun.
 
@@ -99,7 +99,7 @@ Bring back the hobbies you abandoned. Try something new. Make playlists. Explore
 
 You don't have to earn enjoyment by being productive first.
 
-## 7. Give yourself permission to begin again.
+**7. Give yourself permission to begin again.**
 
 There will be days when you feel confident and days when you question everything.
 
@@ -113,7 +113,7 @@ You don't have to restart your entire life because you had one difficult day.
 
 You can simply continue.
 
-## A little reminder before you go.
+A little reminder before you go.
 
 If you're currently in a phase where you're trying to find yourself again, I hope you remember that you don't need to become someone extraordinary to deserve an extraordinary amount of kindness from yourself.
 
@@ -127,9 +127,9 @@ Start with the way you speak to yourself. Start with the promises you keep. Star
 
 And when you forget, because you probably will sometimes, remind yourself gently.
 
-> **You are not someone you need to spend your entire life fighting against. You are someone you get to spend your entire life learning to understand.**
-
-Maybe that's where loving yourself again begins.
+> You are not someone you need to spend your entire life fighting against. You are someone you get to spend your entire life learning to understand.
+>
+> Maybe that's where loving yourself again begins.
 
 **With love,**  
 **Ria ♡**
