@@ -127,9 +127,9 @@ Start with the way you speak to yourself. Start with the promises you keep. Star
 
 And when you forget, because you probably will sometimes, remind yourself gently.
 
-> You are not someone you need to spend your entire life fighting against. You are someone you get to spend your entire life learning to understand.
+> **You are not someone you need to spend your entire life fighting against. You are someone you get to spend your entire life learning to understand.**
 >
-> Maybe that's where loving yourself again begins.
+> **Maybe that's where loving yourself again begins.**
 
-**With love,**  
-**Ria ♡**
+With love,  
+Ria ♡
