@@ -1,296 +1,324 @@
+/* RiaWrites — CMS-powered diary. No build tools required. */
+(() => {
+  "use strict";
 
-const GITHUB_OWNER = "teamriawrites-0608";
-const GITHUB_REPO = "teamriawrites-0608.github.io";
-const GITHUB_BRANCH = "main";
-const POSTS_PATH = "content/posts";
+  const OWNER = "teamriawrites-0608";
+  const REPO = "teamriawrites-0608.github.io";
+  const BRANCH = "main";
+  const POSTS_PATH = "content/posts";
+  const CATEGORIES = ["Dear Me", "Work in Progress", "Little Things", "Figuring It Out", "Life Lately"];
 
-const postGrid = document.querySelector(".post-grid");
-const filterRow = document.querySelector(".filter-row");
-const emptyState = document.querySelector(".empty-state");
+  const grid = document.querySelector(".post-grid");
+  const filters = document.querySelector(".filter-row");
+  const empty = document.querySelector(".empty-state");
+  const archive = document.querySelector(".archive-list");
+  let posts = [];
+  let activeFilter = "All";
 
-let publishedPosts = [];
+  const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[c]);
 
-function escapeHTML(value = "") {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
-}
-
-function parseFrontmatter(markdown) {
-  const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
-
-  if (!match) return null;
-
-  const metadata = {};
-  let currentKey = null;
-
-  for (const line of match[1].split(/\r?\n/)) {
-    const field = line.match(/^([a-zA-Z0-9_]+):\s*(.*)$/);
-
-    if (field) {
-      currentKey = field[1];
-      let value = field[2].trim();
-
-      if (value.startsWith('"') && value.endsWith('"')) {
-        try {
-          value = JSON.parse(value);
-        } catch {
-          value = value.slice(1, -1);
-        }
-      } else if (value.startsWith("'") && value.endsWith("'")) {
-        value = value.slice(1, -1);
-      }
-
-      metadata[currentKey] = value;
-    } else if (currentKey && /^\s+/.test(line)) {
-      metadata[currentKey] += "\n" + line.trim();
-    }
+  function parseScalar(value) {
+    const v = String(value ?? "").trim();
+    if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) return v.slice(1, -1);
+    if (v === "true" || v === "false") return v;
+    if (v === "null" || v === "~") return "";
+    return v;
   }
 
-  return {
-    ...metadata,
-    body: match[2].trim()
-  };
-}
+  function parseFrontmatter(source) {
+    const match = String(source).replace(/^\uFEFF/, "").match(/^---\s*\r?\n([\s\S]*?)\r?\n---\s*(?:\r?\n|$)([\s\S]*)$/);
+    if (!match) return null;
+    const meta = {};
+    let key = "";
+    for (const line of match[1].split(/\r?\n/)) {
+      const m = line.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
+      if (m) {
+        key = m[1];
+        meta[key] = parseScalar(m[2]);
+      } else if (key && /^\s+/.test(line)) {
+        meta[key] = `${meta[key] || ""}\n${line.trim()}`;
+      }
+    }
+    return {...meta, body: match[2].trim()};
+  }
 
-function markdownToHTML(markdown = "") {
-  return markdown
-    .split(/\n{2,}/)
-    .map(paragraph => {
-      const safe = escapeHTML(paragraph.trim())
-        .replace(/\n/g, "<br>");
+  function safeUrl(raw) {
+    const value = String(raw || "").trim();
+    if (!value) return "";
+    if (/^(https?:\/\/|\/)/i.test(value)) return value;
+    return "";
+  }
 
-      return safe ? `<p>${safe}</p>` : "";
-    })
-    .join("");
-}
+  function inlineMarkdown(text) {
+    let s = esc(text);
+    s = s.replace(/`([^`]+)`/g, "<code>$1</code>");
+    s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    s = s.replace(/__([^_]+)__/g, "<strong>$1</strong>");
+    s = s.replace(/(^|[^*])\*([^*]+)\*/g, "$1<em>$2</em>");
+    s = s.replace(/(^|[^_])_([^_]+)_/g, "$1<em>$2</em>");
+    s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    return s;
+  }
 
-function formatDate(date) {
-  const parsed = new Date(`${date}T00:00:00`);
+  function markdownToHTML(markdown) {
+    const lines = String(markdown || "").replace(/\r/g, "").split("\n");
+    const out = [];
+    let paragraph = [], list = null, quote = [];
 
-  if (Number.isNaN(parsed.getTime())) return date || "";
+    const flushP = () => {
+      if (paragraph.length) { out.push(`<p>${inlineMarkdown(paragraph.join(" "))}</p>`); paragraph = []; }
+    };
+    const flushList = () => {
+      if (list) { out.push(`<${list.tag}>${list.items.map(x => `<li>${inlineMarkdown(x)}</li>`).join("")}</${list.tag}>`); list = null; }
+    };
+    const flushQuote = () => {
+      if (quote.length) { out.push(`<blockquote>${quote.map(x => `<p>${inlineMarkdown(x)}</p>`).join("")}</blockquote>`); quote = []; }
+    };
 
-  return parsed.toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
-}
+    for (const line of lines) {
+      const t = line.trim();
+      if (!t) { flushP(); flushList(); flushQuote(); continue; }
+      const heading = t.match(/^(#{1,4})\s+(.+)$/);
+      const bullet = t.match(/^[-*+]\s+(.+)$/);
+      const numbered = t.match(/^\d+[.)]\s+(.+)$/);
+      if (heading) {
+        flushP(); flushList(); flushQuote();
+        const level = Math.min(heading[1].length + 1, 6);
+        out.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
+      } else if (bullet || numbered) {
+        flushP(); flushQuote();
+        const tag = bullet ? "ul" : "ol";
+        if (!list || list.tag !== tag) { flushList(); list = {tag, items:[]}; }
+        list.items.push((bullet || numbered)[1]);
+      } else if (t.startsWith(">")) {
+        flushP(); flushList(); quote.push(t.replace(/^>\s?/, ""));
+      } else {
+        flushList(); flushQuote(); paragraph.push(t);
+      }
+    }
+    flushP(); flushList(); flushQuote();
+    return out.join("\n");
+  }
 
-function renderFilters(posts) {
-  if (!filterRow) return;
+  function dateObj(date) {
+    const d = new Date(`${date || ""}T00:00:00`);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+  function formatDate(date) {
+    const d = dateObj(date);
+    return d ? d.toLocaleDateString("en-IN", {day:"numeric", month:"long", year:"numeric"}) : "";
+  }
+  function slugFromFile(name) { return name.replace(/\.md$/i, ""); }
 
-  const categories = [...new Set(posts.map(post => post.category).filter(Boolean))];
-
-  filterRow.innerHTML = [
-    '<button class="filter active" data-filter="All">Everything</button>',
-    ...categories.map(category =>
-      `<button class="filter" data-filter="${escapeHTML(category)}">${escapeHTML(category)}</button>`
-    )
-  ].join("");
-
-  filterRow.addEventListener("click", event => {
-    const button = event.target.closest(".filter");
-    if (!button) return;
-
-    filterRow.querySelectorAll(".filter").forEach(item =>
-      item.classList.remove("active")
-    );
-
-    button.classList.add("active");
-
-    const selected = button.dataset.filter;
+  function applyFilter(category) {
+    activeFilter = category;
+    if (!grid) return;
     let visible = 0;
-
-    postGrid.querySelectorAll(".post-card").forEach(card => {
-      const show = selected === "All" ||
-        card.dataset.category === selected;
-
+    grid.querySelectorAll(".post-card").forEach(card => {
+      const show = category === "All" || card.dataset.category === category;
       card.hidden = !show;
       if (show) visible++;
     });
-
-    if (emptyState) emptyState.hidden = visible !== 0;
-  }, { once: true });
-}
-
-function renderPosts(posts) {
-  if (!postGrid) return;
-
-  if (!posts.length) {
-    postGrid.innerHTML = "";
-    if (emptyState) {
-      emptyState.hidden = false;
-      emptyState.textContent = "No published notes just yet. Come back soon ♡";
+    if (empty) {
+      empty.hidden = visible !== 0;
+      if (visible === 0) empty.textContent = "No notes in this chapter just yet. Come back soon ♡";
     }
-    return;
-  }
-
-  postGrid.innerHTML = posts.map((post, index) => {
-    const image = post.cover_image
-      ? `<img src="${escapeHTML(post.cover_image)}" alt="${escapeHTML(post.title)}" loading="lazy">`
-      : "";
-
-    const slug = encodeURIComponent(post.slug);
-
-    return `
-      <article class="post-card" data-category="${escapeHTML(post.category || "")}">
-        <a class="post-image" href="#article=${slug}" aria-label="Read ${escapeHTML(post.title)}">
-          ${image}
-          <span class="image-stamp">${escapeHTML(post.category || "DIARY")}</span>
-        </a>
-        <p class="post-meta">${escapeHTML(post.category || "DIARY")} <span>·</span> ${formatDate(post.date)}</p>
-        <h3><a href="#article=${slug}">${escapeHTML(post.title)}</a></h3>
-        <p class="post-description">${escapeHTML(post.excerpt || "")}</p>
-        <a class="read-more" href="#article=${slug}">Read the note <span>↗</span></a>
-      </article>
-    `;
-  }).join("");
-
-  if (emptyState) emptyState.hidden = true;
-  renderFilters(posts);
-}
-
-function renderArticle(post) {
-  let detail = document.querySelector("#article-detail");
-
-  if (!detail) {
-    detail = document.createElement("section");
-    detail.id = "article-detail";
-    detail.className = "wrap";
-    detail.style.padding = "60px 0";
-    document.querySelector("main").appendChild(detail);
-  }
-
-  detail.innerHTML = `
-    <a class="text-link" href="#latest">← Back to the diary</a>
-    <p class="eyebrow">${escapeHTML(post.category || "DIARY")}</p>
-    <h1>${escapeHTML(post.title)}</h1>
-    <p class="post-meta">${formatDate(post.date)}</p>
-    ${post.cover_image
-      ? `<img src="${escapeHTML(post.cover_image)}" alt="${escapeHTML(post.title)}" style="width:100%;max-height:480px;object-fit:cover;margin:24px 0">`
-      : ""}
-    <div class="article-body">${markdownToHTML(post.body)}</div>
-  `;
-
-  document.querySelectorAll("main > section").forEach(section => {
-    section.hidden = section.id !== "article-detail";
-  });
-
-  detail.hidden = false;
-  window.scrollTo(0, 0);
-}
-
-function handleArticleRoute() {
-  const match = location.hash.match(/^#article=(.+)$/);
-
-  if (!match) {
-    document.querySelectorAll("main > section").forEach(section => {
-      section.hidden = false;
+    if (filters) filters.querySelectorAll(".filter").forEach(btn => {
+      const active = btn.dataset.filter === category;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-pressed", String(active));
     });
+  }
 
+  function renderFilters() {
+    if (!filters) return;
+    filters.innerHTML = [
+      '<button class="filter active" type="button" data-filter="All" aria-pressed="true">Everything</button>',
+      ...CATEGORIES.map(c => `<button class="filter" type="button" data-filter="${esc(c)}" aria-pressed="false">${esc(c)}</button>`)
+    ].join("");
+  }
+
+  function renderPosts() {
+    if (!grid) return;
+    if (!posts.length) {
+      grid.innerHTML = "";
+      if (empty) { empty.hidden = false; empty.textContent = "No published notes just yet. Come back soon ♡"; }
+      return;
+    }
+    grid.innerHTML = posts.map(post => {
+      const imageUrl = safeUrl(post.cover_image);
+      const href = `#article=${encodeURIComponent(post.slug)}`;
+      return `<article class="post-card" data-category="${esc(post.category)}">
+        <a class="post-image" href="${href}" aria-label="Read ${esc(post.title)}">
+          ${imageUrl ? `<img src="${esc(imageUrl)}" alt="${esc(post.title)}" loading="lazy">` : ""}
+          <span class="image-stamp">${esc(post.category || "DIARY")}</span>
+        </a>
+        <p class="post-meta">${esc(post.category || "DIARY")} <span>·</span> ${esc(formatDate(post.date))}</p>
+        <h3><a href="${href}">${esc(post.title)}</a></h3>
+        <p class="post-description">${esc(post.excerpt || "")}</p>
+        <a class="read-more" href="${href}">Read the note <span>↗</span></a>
+      </article>`;
+    }).join("");
+    if (empty) empty.hidden = true;
+    applyFilter(activeFilter);
+  }
+
+  function renderArchive() {
+    if (!archive) return;
+    if (!posts.length) { archive.innerHTML = '<p class="archive-loading">Your archive will appear here when notes are published ♡</p>'; return; }
+    const groups = new Map();
+    posts.forEach(post => {
+      const d = dateObj(post.date);
+      if (!d) return;
+      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+      if (!groups.has(key)) groups.set(key, {year:d.getFullYear(), month:d.toLocaleDateString("en-IN",{month:"long"}), count:0});
+      groups.get(key).count++;
+    });
+    archive.innerHTML = [...groups.entries()].sort((a,b) => b[0].localeCompare(a[0])).map(([key,g]) =>
+      `<a href="#archive-month=${key}" data-month="${key}"><span>${g.year}</span><span>${esc(g.month)} <small>— notes from this month</small></span><span class="archive-count">${g.count} ${g.count===1?"NOTE":"NOTES"} ↗</span></a>`
+    ).join("");
+  }
+
+  function showMainSections() {
+    document.querySelectorAll("main > section").forEach(section => section.hidden = false);
     const detail = document.querySelector("#article-detail");
     if (detail) detail.hidden = true;
-    return;
   }
 
-  const slug = decodeURIComponent(match[1]);
-  const post = publishedPosts.find(item => item.slug === slug);
-
-  if (post) renderArticle(post);
-}
-
-async function loadPosts() {
-  if (!postGrid) return;
-
-  postGrid.innerHTML = "<p>Opening the diary… ♡</p>";
-
-  try {
-    const apiURL =
-      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${POSTS_PATH}?ref=${GITHUB_BRANCH}`;
-
-    const response = await fetch(apiURL);
-
-    if (!response.ok) {
-      throw new Error(`GitHub returned ${response.status}`);
+  function renderArticle(post) {
+    let detail = document.querySelector("#article-detail");
+    if (!detail) {
+      detail = document.createElement("section");
+      detail.id = "article-detail";
+      detail.className = "article-detail wrap";
+      document.querySelector("main").appendChild(detail);
     }
-
-    const files = await response.json();
-
-    const markdownFiles = files.filter(file =>
-      file.type === "file" && file.name.endsWith(".md")
-    );
-
-    const articles = await Promise.all(
-      markdownFiles.map(async file => {
-        const articleResponse = await fetch(file.download_url);
-
-        if (!articleResponse.ok) return null;
-
-        const markdown = await articleResponse.text();
-        const article = parseFrontmatter(markdown);
-
-        if (!article) return null;
-
-        return {
-          ...article,
-          slug: file.name.replace(/\.md$/, "")
-        };
-      })
-    );
-
-    publishedPosts = articles
-      .filter(post => post && String(post.published).toLowerCase() === "true")
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    renderPosts(publishedPosts);
-    handleArticleRoute();
-
-  } catch (error) {
-    console.error("RiaWrites article loading error:", error);
-    postGrid.innerHTML =
-      "<p>Our diary is taking a little break. Please visit again soon ♡</p>";
+    const imageUrl = safeUrl(post.cover_image);
+    detail.innerHTML = `<a class="text-link" href="#latest">← Back to the diary</a>
+      <p class="eyebrow">${esc(post.category || "DIARY")}</p>
+      <h1>${esc(post.title)}</h1>
+      <p class="post-meta">${esc(formatDate(post.date))}</p>
+      ${imageUrl ? `<img class="article-cover" src="${esc(imageUrl)}" alt="${esc(post.title)}">` : ""}
+      <div class="article-body">${markdownToHTML(post.body)}</div>`;
+    document.querySelectorAll("main > section").forEach(section => section.hidden = section === detail ? false : true);
+    detail.hidden = false;
+    window.scrollTo({top:0, behavior:"smooth"});
+    document.title = `${post.title} — Ria Writes`;
   }
-}
 
-// Mobile navigation
-const menuButton = document.querySelector(".menu-toggle");
-const navigation = document.querySelector(".nav-links");
+  function showNotFound(slug) {
+    let detail = document.querySelector("#article-detail");
+    if (!detail) {
+      detail = document.createElement("section");
+      detail.id = "article-detail";
+      detail.className = "article-detail wrap";
+      document.querySelector("main").appendChild(detail);
+    }
+    detail.innerHTML = `<a class="text-link" href="#latest">← Back to the diary</a><h1>This note is taking a little detour.</h1><p>We couldn't find “${esc(slug)}”. It may have been unpublished or moved.</p>`;
+    document.querySelectorAll("main > section").forEach(section => section.hidden = section === detail ? false : true);
+    detail.hidden = false;
+    document.title = "Note not found — Ria Writes";
+  }
 
-if (menuButton && navigation) {
-  menuButton.addEventListener("click", () => {
-    const expanded = menuButton.getAttribute("aria-expanded") === "true";
-    menuButton.setAttribute("aria-expanded", String(!expanded));
-    navigation.classList.toggle("open", !expanded);
+  function handleRoute() {
+    const articleMatch = location.hash.match(/^#article=(.*)$/);
+    const monthMatch = location.hash.match(/^#archive-month=(\d{4}-\d{2})$/);
+    if (articleMatch) {
+      let slug = articleMatch[1];
+      try { slug = decodeURIComponent(slug); } catch {}
+      const found = posts.find(p => p.slug === slug);
+      if (found) renderArticle(found);
+      else if (posts.length) showNotFound(slug);
+      return;
+    }
+    showMainSections();
+    document.title = "Ria Writes — A little bit of everything";
+    if (monthMatch) {
+      const key = monthMatch[1];
+      applyFilter("All");
+      const matching = posts.filter(p => {
+        const d = dateObj(p.date);
+        return d && `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}` === key;
+      });
+      if (grid) {
+        grid.querySelectorAll(".post-card").forEach(card => {
+          const post = posts.find(p => card.querySelector("h3 a")?.getAttribute("href") === `#article=${encodeURIComponent(p.slug)}`);
+          card.hidden = !post || !matching.includes(post);
+        });
+      }
+      const count = matching.length;
+      if (empty) { empty.hidden = count > 0; empty.textContent = count ? "" : "No notes were published in this month."; }
+      document.querySelector("#latest")?.scrollIntoView({behavior:"smooth"});
+    }
+  }
+
+  async function loadPosts() {
+    if (!grid) return;
+    grid.innerHTML = '<p class="loading-note">Opening the diary… ♡</p>';
+    try {
+      const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${POSTS_PATH}?ref=${BRANCH}`;
+      const response = await fetch(url, {headers:{Accept:"application/vnd.github+json"}});
+      if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
+      const files = await response.json();
+      if (!Array.isArray(files)) throw new Error("The article folder response was not a file list.");
+      const markdownFiles = files.filter(f => f.type === "file" && /\.md$/i.test(f.name));
+      const records = await Promise.all(markdownFiles.map(async file => {
+        const r = await fetch(file.download_url);
+        if (!r.ok) return null;
+        const parsed = parseFrontmatter(await r.text());
+        if (!parsed) return null;
+        const published = String(parsed.published).toLowerCase() === "true";
+        if (!published) return null;
+        return {...parsed, slug:slugFromFile(file.name), title:parsed.title || "Untitled note"};
+      }));
+      posts = records.filter(Boolean).sort((a,b) => (dateObj(b.date)?.getTime() || 0) - (dateObj(a.date)?.getTime() || 0));
+      renderFilters();
+      renderPosts();
+      renderArchive();
+      handleRoute();
+    } catch (error) {
+      console.error("RiaWrites CMS error:", error);
+      grid.innerHTML = '<p class="loading-note">The diary could not load right now. Please refresh in a moment ♡</p>';
+      if (archive) archive.innerHTML = '<p class="archive-loading">The archive could not load right now.</p>';
+    }
+  }
+
+  if (filters) filters.addEventListener("click", event => {
+    const button = event.target.closest("button[data-filter]");
+    if (button) applyFilter(button.dataset.filter);
+  });
+  document.querySelectorAll(".category-card[data-category]").forEach(card => card.addEventListener("click", () => {
+    const category = card.dataset.category;
+    location.hash = "latest";
+    applyFilter(category);
+    document.querySelector("#latest")?.scrollIntoView({behavior:"smooth"});
+  }));
+  if (archive) archive.addEventListener("click", event => {
+    const link = event.target.closest("a[data-month]");
+    if (link) {
+      event.preventDefault();
+      location.hash = `archive-month=${link.dataset.month}`;
+    }
   });
 
-  navigation.querySelectorAll("a").forEach(link =>
-    link.addEventListener("click", () => {
-      navigation.classList.remove("open");
+  const menuButton = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".nav-links");
+  if (menuButton && nav) {
+    menuButton.addEventListener("click", () => {
+      const open = menuButton.getAttribute("aria-expanded") === "true";
+      menuButton.setAttribute("aria-expanded", String(!open));
+      nav.classList.toggle("open", !open);
+    });
+    nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+      nav.classList.remove("open");
       menuButton.setAttribute("aria-expanded", "false");
-    })
-  );
-}
+    }));
+  }
 
-// Newsletter demo
-const signupForm = document.querySelector(".signup-form");
-
-if (signupForm) {
-  signupForm.addEventListener("submit", event => {
-    event.preventDefault();
-
-    const success = document.querySelector(".form-success");
-    if (success) success.hidden = false;
-
-    signupForm.reset();
-  });
-}
-
-// Article navigation
-window.addEventListener("hashchange", handleArticleRoute);
-
-loadPosts();
+  const year = document.querySelector("#copyright-year");
+  if (year) year.textContent = new Date().getFullYear();
+  window.addEventListener("hashchange", handleRoute);
+  loadPosts();
+})();

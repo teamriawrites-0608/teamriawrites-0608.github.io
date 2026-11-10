@@ -3,3 +3,46 @@
 .wordmark i {
   margin-left: 6px;
 }
+
+
+/* RiaWrites functional refinements — preserves the existing palette and type system. */
+[hidden] { display: none !important; }
+.filter-row { flex-wrap: wrap; }
+.filter { cursor: pointer; }
+.filter:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; }
+.post-card[hidden] { display: none !important; }
+.post-image img { width: 100%; height: 100%; object-fit: cover; }
+.about-surya { padding-top: 55px; border-top: 1px solid #e4ded3; }
+.about-surya-photo { margin-left: 0; margin-right: 14%; }
+.article-detail { padding-top: 65px; padding-bottom: 90px; min-height: 60vh; }
+.article-detail > h1 { max-width: 900px; margin-top: 22px; }
+.article-cover { width: 100%; max-height: 520px; object-fit: cover; margin: 28px 0 38px; }
+.article-body { max-width: 760px; margin: 0 auto; color: #55574e; font-size: 15px; line-height: 1.95; }
+.article-body h2, .article-body h3, .article-body h4 { margin: 2em 0 .7em; color: var(--ink); }
+.article-body p { margin: 0 0 1.25em; }
+.article-body ul, .article-body ol { padding-left: 1.5rem; margin: 0 0 1.3em; }
+.article-body li { margin: .35em 0; }
+.article-body blockquote { margin: 1.6em 0; padding: .5em 1.3em; border-left: 3px solid #b88a80; background: #f0ece3; font-family: var(--serif); font-size: 1.15em; }
+.article-body a { text-decoration: underline; text-underline-offset: 3px; }
+.article-body code { background: #eee9df; padding: .12em .35em; border-radius: 3px; }
+.archive-loading, .loading-note { color: var(--muted); text-align: center; padding: 24px; }
+.archive-list > a { cursor: pointer; }
+.signup-form { display: none !important; }
+.form-note { display: block; margin-top: 18px; color: #77776c; }
+@media (max-width: 760px) {
+  .site-header { position: relative; height: 72px; padding: 0 22px; }
+  .menu-toggle { display: flex; width: 38px; height: 38px; flex-direction: column; justify-content: center; gap: 6px; border: 0; background: transparent; cursor: pointer; }
+  .menu-toggle span { display: block; width: 23px; height: 1px; background: var(--ink); }
+  .nav-links { display: none; position: absolute; z-index: 20; top: 71px; left: 0; right: 0; padding: 18px 24px 22px; background: var(--paper); border-bottom: 1px solid #e8e2d8; flex-direction: column; gap: 16px; }
+  .nav-links.open { display: flex; }
+  .header-note { display: none; }
+  .wrap { width: min(var(--max), calc(100% - 40px)); }
+  .about-section { grid-template-columns: 1fr; gap: 38px; padding-top: 70px; padding-bottom: 72px; }
+  .about-photo, .about-surya-photo { height: min(420px, 90vw); margin: 0 7% 0 0; }
+  .about-surya .about-copy { order: 1; }
+  .about-surya-photo { order: 2; }
+  .archive-list > a { grid-template-columns: .7fr 2fr 1fr; font-size: 16px; gap: 8px; }
+  .archive-count { font-size: 8px; }
+  .article-detail { padding-top: 42px; }
+  .article-detail > h1 { font-size: clamp(38px, 10vw, 58px); }
+}
