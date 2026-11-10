@@ -46,3 +46,64 @@
   .article-detail { padding-top: 42px; }
   .article-detail > h1 { font-size: clamp(38px, 10vw, 58px); }
 }
+
+
+/* RiaWrites — elegant interaction effects */
+
+/* Smooth movement between page sections */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* Gentle transitions for links */
+.nav-links a,
+.footer-links a,
+.text-link,
+.archive-list a,
+.article-body a {
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-links a:hover,
+.footer-links a:hover,
+.text-link:hover,
+.archive-list a:hover,
+.article-body a:hover {
+  color: var(--rose);
+}
+
+/* Gentle button interactions */
+.button,
+.button-dark,
+.button-outline,
+button {
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.button:hover,
+.button-dark:hover,
+.button-outline:hover,
+button:hover {
+  transform: translateY(-2px);
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
