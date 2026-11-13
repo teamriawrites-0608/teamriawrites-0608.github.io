@@ -432,3 +432,11 @@ button:hover {
     font-size: 2rem;
   }
 }
+
+/* Desktop fix for the About section */
+@media (min-width: 761px) {
+  #about.about-editorial {
+    display: block;
+    width: 100%;
+  }
+}
