@@ -393,3 +393,42 @@ button:hover {
     font-size: 1.1rem;
   }
 }
+/* RiaWrites — Editorial About responsive fix */
+
+@media (max-width: 900px) {
+  #about.about-editorial .editorial-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+  }
+
+  #about.about-editorial .editorial-people,
+  #about.about-editorial .editorial-person,
+  #about.about-editorial .editorial-person-copy,
+  #about.about-editorial .editorial-aside {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #about.about-editorial .editorial-aside {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  #about.about-editorial {
+    padding: 64px 22px;
+  }
+
+  #about.about-editorial .editorial-person {
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  #about.about-editorial .editorial-number {
+    font-size: 2.5rem;
+  }
+
+  #about.about-editorial .editorial-person-copy h3 {
+    font-size: 2rem;
+  }
+}
