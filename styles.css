@@ -440,3 +440,15 @@ button:hover {
     width: 100%;
   }
 }
+
+/* Smooth navigation throughout RiaWrites */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
