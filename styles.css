@@ -395,7 +395,7 @@ button:hover {
 }
 /* RiaWrites — Editorial About responsive fix */
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   #about.about-editorial .editorial-layout {
     grid-template-columns: minmax(0, 1fr);
     gap: 48px;
