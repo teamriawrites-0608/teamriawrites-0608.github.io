@@ -107,3 +107,289 @@ button:hover {
   }
 }
 
+/* RiaWrites — Editorial About Design */
+
+#about.about-editorial {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 100px 7% 110px;
+  background:
+    radial-gradient(ellipse at 12% 100%, rgba(166, 91, 62, 0.10), transparent 23%),
+    radial-gradient(ellipse at 76% 0%, rgba(70, 76, 39, 0.10), transparent 22%),
+    #f8f2e9;
+  color: #211d19;
+}
+
+#about.about-editorial::before,
+#about.about-editorial::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border: 1px solid rgba(166, 91, 62, 0.55);
+  border-radius: 50%;
+}
+
+#about.about-editorial::before {
+  width: 390px;
+  height: 390px;
+  top: -285px;
+  right: 12%;
+  box-shadow: 0 0 0 65px rgba(70, 76, 39, 0.92);
+}
+
+#about.about-editorial::after {
+  width: 460px;
+  height: 460px;
+  bottom: -360px;
+  left: -240px;
+}
+
+#about .editorial-inner {
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+  position: relative;
+}
+
+#about .editorial-heading {
+  max-width: 850px;
+  margin-bottom: 50px;
+}
+
+#about .editorial-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(3.5rem, 6.5vw, 6.2rem);
+  line-height: 0.99;
+  letter-spacing: -0.055em;
+  font-weight: 400;
+}
+
+#about .editorial-title em {
+  color: #a45e43;
+  font-weight: 400;
+}
+
+#about .editorial-accent {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+#about .editorial-accent span {
+  display: block;
+  width: 62px;
+  height: 7px;
+  background: #505333;
+}
+
+#about .editorial-accent span + span {
+  width: 30px;
+  background: #a45e43;
+}
+
+#about .editorial-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(290px, 0.95fr);
+  gap: 55px;
+  align-items: stretch;
+}
+
+#about .editorial-people {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+#about .editorial-person {
+  display: grid;
+  grid-template-columns: 145px minmax(0, 1fr);
+  gap: 25px;
+  align-items: stretch;
+}
+
+#about .editorial-number {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(4rem, 6vw, 6.3rem);
+  line-height: 1;
+  font-style: italic;
+  color: #505333;
+  border-right: 1px solid #a45e43;
+  padding: 0 25px 0 0;
+}
+
+#about .editorial-person-copy h3 {
+  margin: -8px 0 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2.8rem, 4vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #211d19;
+}
+
+#about .editorial-role {
+  margin: 4px 0 14px;
+  color: #a45e43;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+#about .editorial-person-copy > p:not(.editorial-role) {
+  margin: 0 0 13px;
+  max-width: 720px;
+  color: #302a25;
+  font-family: Georgia, serif;
+  font-size: 1.08rem;
+  line-height: 1.55;
+}
+
+#about .editorial-aside {
+  border-left: 1px solid rgba(164, 94, 67, 0.75);
+  padding: 5px 0 0 55px;
+  display: flex;
+  flex-direction: column;
+}
+
+#about .editorial-aside-heading {
+  margin: 0;
+  color: #505333;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+#about .editorial-aside .editorial-accent {
+  margin: 20px 0 25px;
+}
+
+#about .editorial-aside-intro,
+#about .editorial-aside-note {
+  margin: 0 0 24px;
+  color: #302a25;
+  font-family: Georgia, serif;
+  font-size: clamp(1.15rem, 1.5vw, 1.45rem);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+#about .editorial-aside-note {
+  margin-top: 10px;
+}
+
+#about .editorial-quote {
+  display: grid;
+  grid-template-columns: 45px 1fr;
+  gap: 18px;
+  align-items: start;
+  border-top: 1px solid rgba(164, 94, 67, 0.5);
+  margin-top: 18px;
+  padding-top: 25px;
+}
+
+#about .editorial-quote-mark {
+  color: #a45e43;
+  font-family: Georgia, serif;
+  font-size: 4rem;
+  line-height: 0.8;
+}
+
+#about .editorial-quote p {
+  margin: 0;
+  padding-left: 18px;
+  border-left: 1px solid #a45e43;
+  color: #a45e43;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.2rem, 1.6vw, 1.55rem);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+#about .editorial-welcome {
+  margin: 45px auto 0;
+  padding: 15px 28px;
+  max-width: 390px;
+  width: 100%;
+  border-radius: 48% 35% 42% 30%;
+  background: rgba(190, 181, 143, 0.42);
+  color: #45482d;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.35rem;
+  font-style: italic;
+  text-align: center;
+  transform: rotate(-1deg);
+}
+
+/* Tablet and mobile layout */
+@media (max-width: 900px) {
+  #about.about-editorial {
+    padding: 75px 6%;
+  }
+
+  #about .editorial-layout {
+    grid-template-columns: 1fr;
+    gap: 55px;
+  }
+
+  #about .editorial-aside {
+    border-left: 0;
+    border-top: 1px solid rgba(164, 94, 67, 0.65);
+    padding: 35px 0 0;
+  }
+
+  #about .editorial-heading {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 560px) {
+  #about.about-editorial {
+    padding: 65px 22px 75px;
+  }
+
+  #about .editorial-title {
+    font-size: clamp(3rem, 13vw, 4.2rem);
+  }
+
+  #about .editorial-person {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  #about .editorial-number {
+    font-size: 3.5rem;
+    padding-right: 12px;
+  }
+
+  #about .editorial-person-copy h3 {
+    font-size: 2.5rem;
+  }
+
+  #about .editorial-role {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+  }
+
+  #about .editorial-person-copy > p:not(.editorial-role) {
+    font-size: 1rem;
+  }
+
+  #about .editorial-people {
+    gap: 38px;
+  }
+
+  #about .editorial-aside-intro,
+  #about .editorial-aside-note {
+    font-size: 1.15rem;
+  }
+
+  #about .editorial-welcome {
+    font-size: 1.1rem;
+  }
+}
