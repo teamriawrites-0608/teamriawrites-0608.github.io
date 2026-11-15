@@ -187,26 +187,113 @@
     if (detail) detail.hidden = true;
   }
 
-  function renderArticle(post) {
-    let detail = document.querySelector("#article-detail");
-    if (!detail) {
-      detail = document.createElement("section");
-      detail.id = "article-detail";
-      detail.className = "article-detail wrap";
-      document.querySelector("main").appendChild(detail);
-    }
-    const imageUrl = safeUrl(post.cover_image);
-    detail.innerHTML = `<a class="text-link" href="#latest">← Back to the diary</a>
-      <p class="eyebrow">${esc(post.category || "DIARY")}</p>
-      <h1>${esc(post.title)}</h1>
-      <p class="post-meta">${esc(formatDate(post.date))}</p>
-      ${imageUrl ? `<img class="article-cover" src="${esc(imageUrl)}" alt="${esc(post.title)}">` : ""}
-      <div class="article-body">${markdownToHTML(post.body)}</div>`;
-    document.querySelectorAll("main > section").forEach(section => section.hidden = section === detail ? false : true);
-    detail.hidden = false;
-    window.scrollTo({top:0, behavior:"auto"});
-    document.title = `${post.title} — Ria Writes`;
+
+function renderArticle(post) {
+  let detail = document.querySelector("#article-detail");
+
+  if (!detail) {
+    detail = document.createElement("section");
+    detail.id = "article-detail";
+    detail.className = "article-detail wrap";
+    document.querySelector("main").appendChild(detail);
   }
+
+  const imageUrl = safeUrl(post.cover_image);
+
+  // Calculate article reading time
+  const plainText = String(post.body || "")
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/!\[.*?\]\(.*?\)/g, " ")
+    .replace(/\[([^\]]+)\]\(.*?\)/g, "$1")
+    .replace(/[#>*_`~-]/g, " ")
+    .trim();
+
+  const wordCount = plainText ? plainText.split(/\s+/).length : 0;
+  const readingMinutes = Math.max(1, Math.ceil(wordCount / 200));
+
+  detail.innerHTML = `
+    <div class="article-reading-nav">
+      <a class="article-back-link" href="#latest">
+        ← Back to Story
+      </a>
+
+      <div class="reading-progress">
+        <div class="reading-progress-track">
+          <span class="reading-progress-fill"></span>
+        </div>
+        <span class="reading-progress-label" aria-live="polite">0% read</span>
+      </div>
+    </div>
+
+    <p class="eyebrow">
+      ${esc(post.category || "DIARY")}
+      <span> · </span>
+      ${esc(formatDate(post.date))}
+    </p>
+
+    <h1>${esc(post.title)}</h1>
+
+    <p class="article-reading-time">
+      ${readingMinutes} min read
+      <span>·</span>
+      ${wordCount.toLocaleString("en-IN")} words
+    </p>
+
+    ${imageUrl ? `<img class="article-cover" src="${esc(imageUrl)}" alt="${esc(post.title)}">` : ""}
+
+    <div class="article-body">
+      ${markdownToHTML(post.body)}
+    </div>
+  `;
+
+  document.querySelectorAll("main > section").forEach(section => {
+    section.hidden = section === detail ? false : true;
+  });
+
+  detail.hidden = false;
+
+  // Update reading progress while scrolling
+  if (detail._progressHandler) {
+    window.removeEventListener("scroll", detail._progressHandler);
+  }
+
+  const updateProgress = () => {
+    const body = detail.querySelector(".article-body");
+    if (!body || detail.hidden) return;
+
+    const top = window.scrollY + body.getBoundingClientRect().top;
+    const bottom = top + body.offsetHeight;
+    const start = top - 120;
+    const end = bottom - window.innerHeight;
+
+    let progress = 0;
+
+    if (end <= start) {
+      progress = window.scrollY >= start ? 100 : 0;
+    } else {
+      progress = Math.min(
+        100,
+        Math.max(0, ((window.scrollY - start) / (end - start)) * 100)
+      );
+    }
+
+    const percentage = Math.round(progress);
+
+    const fill = detail.querySelector(".reading-progress-fill");
+    const label = detail.querySelector(".reading-progress-label");
+
+    if (fill) fill.style.width = `${percentage}%`;
+    if (label) label.textContent = `${percentage}% read`;
+  };
+
+  detail._progressHandler = updateProgress;
+  window.addEventListener("scroll", updateProgress, { passive: true });
+
+  window.scrollTo({ top: 0, behavior: "auto" });
+  updateProgress();
+
+  document.title = `${post.title} — Ria Writes`;
+}
 
   function showNotFound(slug) {
     let detail = document.querySelector("#article-detail");
