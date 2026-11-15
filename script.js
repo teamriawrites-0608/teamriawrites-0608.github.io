@@ -15,41 +15,7 @@
   let posts = [];
   let activeFilter = "All";
   
-/* RiaWrites — custom smooth scrolling */
-function smoothScrollTo(target, duration = 1200) {
-  if (!target) return;
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    target.scrollIntoView();
-    return;
-  }
-
-  const start = window.scrollY;
-  const offset = 80;
-  const end = Math.max(
-    0,
-    target.getBoundingClientRect().top + start - offset
-  );
-
-  const distance = end - start;
-  const startTime = performance.now();
-
-  function animate(currentTime) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-
-    const eased = progress < 0.5
-      ? 4 * progress * progress * progress
-      : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-    window.scrollTo(0, start + distance * eased);
-
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    }
-  }
-
-  requestAnimationFrame(animate);
 }
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
     "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
@@ -240,7 +206,7 @@ function smoothScrollTo(target, duration = 1200) {
       <div class="article-body">${markdownToHTML(post.body)}</div>`;
     document.querySelectorAll("main > section").forEach(section => section.hidden = section === detail ? false : true);
     detail.hidden = false;
-    window.scrollTo({top:0, behavior:"smooth"});
+    window.scrollTo({top:0, behavior:"auto"});
     document.title = `${post.title} — Ria Writes`;
   }
 
@@ -286,7 +252,7 @@ function smoothScrollTo(target, duration = 1200) {
       }
       const count = matching.length;
       if (empty) { empty.hidden = count > 0; empty.textContent = count ? "" : "No notes were published in this month."; }
-      smoothScrollTo(document.querySelector("#latest"));
+      document.querySelector("#latest")?.scrollIntoView();
     }
   }
 
@@ -329,7 +295,7 @@ function smoothScrollTo(target, duration = 1200) {
     const category = card.dataset.category;
     location.hash = "latest";
     applyFilter(category);
-    document.querySelector("#latest")?.scrollIntoView({behavior:"smooth"});
+   document.querySelector("#latest")?.scrollIntoView();
   }));
   if (archive) archive.addEventListener("click", event => {
     const link = event.target.closest("a[data-month]");
@@ -338,22 +304,7 @@ function smoothScrollTo(target, duration = 1200) {
       location.hash = `archive-month=${link.dataset.month}`;
     }
   });
-/* Custom scrolling for internal section links */
-document.addEventListener("click", event => {
-  const link = event.target.closest('a[href^="#"]');
-  if (!link) return;
 
-  const hash = link.getAttribute("href");
-  if (!hash || hash.length < 2) return;
-
-  const target = document.getElementById(hash.slice(1));
-  if (!target) return;
-
-  event.preventDefault();
-
-  history.pushState(null, "", hash);
-  smoothScrollTo(target);
-});
   const menuButton = document.querySelector(".menu-toggle");
   const nav = document.querySelector(".nav-links");
   if (menuButton && nav) {
