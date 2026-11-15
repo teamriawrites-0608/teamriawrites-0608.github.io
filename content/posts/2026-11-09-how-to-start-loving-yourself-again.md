@@ -7,15 +7,15 @@ excerpt: A little reminder that becoming yourself again doesn't have to happen
 cover_image: /uploads/screenshot-2026-11-09-233354-1.png
 published: true
 ---
-There are phases in life when you realise you've been giving so much of yourself to everything and everyone that you've somehow forgotten what it feels like to show up for yourself.
+*There are phases in life when you realise you've been giving so much of yourself to everything and everyone that you've somehow forgotten what it feels like to show up for yourself.*
 
-Maybe you've been too hard on yourself. Maybe you've spent too much time trying to be enough for other people. Maybe life simply happened, and somewhere along the way, you stopped treating yourself with the same kindness you so easily give to others.
+*Maybe you've been too hard on yourself. Maybe you've spent too much time trying to be enough for other people. Maybe life simply happened, and somewhere along the way, you stopped treating yourself with the same kindness you so easily give to others.*
 
-And then one day, you decide you want to feel like yourself again.
+*And then one day, you decide you want to feel like yourself again.*
 
-Not necessarily a completely different person. Just someone who feels a little more at peace, a little more confident, and a little more comfortable being who they are.
+*Not necessarily a completely different person. Just someone who feels a little more at peace, a little more confident, and a little more comfortable being who they are.*
 
-But where do you even begin?
+*But where do you even begin?*
 
 - **Stop treating yourself like a problem that needs fixing.**
 
