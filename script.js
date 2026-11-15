@@ -211,6 +211,61 @@ function renderArticle(post) {
   const wordCount = plainText ? plainText.split(/\s+/).length : 0;
   const readingMinutes = Math.max(1, Math.ceil(wordCount / 200));
 
+  // Select two related articles, excluding the current article
+  const sameCategory = posts.filter(
+    item => item.slug !== post.slug && item.category === post.category
+  );
+
+  const relatedPosts = [...sameCategory];
+
+  const selectedSlugs = new Set(relatedPosts.map(item => item.slug));
+
+  posts.forEach(item => {
+    if (
+      relatedPosts.length < 2 &&
+      item.slug !== post.slug &&
+      !selectedSlugs.has(item.slug)
+    ) {
+      relatedPosts.push(item);
+      selectedSlugs.add(item.slug);
+    }
+  });
+
+  const recommendationsHTML = relatedPosts.slice(0, 2).length
+    ? `
+      <section class="related-reading" aria-labelledby="related-reading-title">
+        <p class="eyebrow">WHEN YOU FEEL LIKE READING MORE</p>
+        <h2 id="related-reading-title">A little more to read<span>...</span></h2>
+        <p class="related-reading-intro">A few more stories you might enjoy ♡</p>
+
+        <div class="related-reading-grid">
+          ${relatedPosts.slice(0, 2).map(item => {
+            const recImage = safeUrl(item.cover_image);
+            const summary = String(item.excerpt || item.body || "")
+              .replace(/\s+/g, " ")
+              .trim()
+              .slice(0, 120);
+
+            return `
+              <article class="related-reading-card">
+                <a href="#article=${encodeURIComponent(item.slug)}">
+                  ${recImage
+                    ? `<img src="${esc(recImage)}" alt="${esc(item.title)}" loading="lazy">`
+                    : ""}
+                  <p class="related-reading-category">${esc(item.category || "DIARY")}</p>
+                  <h3>${esc(item.title)}</h3>
+                  <p class="related-reading-summary">${esc(summary)}${summary.length >= 120 ? "…" : ""}</p>
+                  <span class="related-reading-link">Read the note ↗</span>
+                </a>
+              </article>
+            `;
+          }).join("")}
+        </div>
+        <p class="related-reading-footer">A little more of Ria's world. ♡</p>
+      </section>
+    `
+    : "";
+
   detail.innerHTML = `
     <div class="article-reading-nav">
       <a class="article-back-link" href="#latest">
@@ -244,6 +299,8 @@ function renderArticle(post) {
     <div class="article-body">
       ${markdownToHTML(post.body)}
     </div>
+    
+    ${recommendationsHTML}
   `;
 
   document.querySelectorAll("main > section").forEach(section => {
