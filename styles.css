@@ -446,3 +446,100 @@ button:hover {
         scroll-behavior: auto;
     }
 }
+
+
+/* RiaWrites — Article reading progress */
+
+.article-reading-nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: auto minmax(50px, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+  padding: 14px 0;
+  margin-bottom: 38px;
+  background: var(--paper);
+  border-bottom: 1px solid #e8e2d8;
+}
+
+.article-back-link {
+  white-space: nowrap;
+  font-size: 11px;
+  color: var(--olive);
+  border-bottom: 1px solid #aaa391;
+  padding-bottom: 3px;
+}
+
+.article-back-link:hover {
+  color: #a45e43;
+}
+
+.reading-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.reading-progress-track {
+  height: 3px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #e5ded2;
+}
+
+.reading-progress-fill {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background: #a45e43;
+  transition: width 0.15s linear;
+}
+
+.reading-progress-label {
+  min-width: 62px;
+  white-space: nowrap;
+  text-align: right;
+  font-size: 10px;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.article-reading-time {
+  margin: -10px 0 25px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.article-reading-time span {
+  padding: 0 7px;
+  color: #a45e43;
+}
+
+@media (max-width: 560px) {
+  .article-reading-nav {
+    grid-template-columns: auto minmax(35px, 1fr) auto;
+    gap: 10px;
+    padding: 12px 0;
+    margin-bottom: 28px;
+  }
+
+  .article-back-link {
+    font-size: 10px;
+  }
+
+  .reading-progress {
+    gap: 7px;
+  }
+
+  .reading-progress-label {
+    min-width: 55px;
+    font-size: 9px;
+  }
+}
