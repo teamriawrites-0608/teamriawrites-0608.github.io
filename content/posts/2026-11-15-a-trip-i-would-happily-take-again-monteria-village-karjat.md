@@ -1,5 +1,5 @@
 ---
-title: "Monteria Village, Karjat: A Trip I’d Take Again"
+title: "Monteria Village: A Trip I’d Take Again"
 date: 2026-11-15
 category: Life Lately
 excerpt: A little escape from the city, with the kind of memories you don't
