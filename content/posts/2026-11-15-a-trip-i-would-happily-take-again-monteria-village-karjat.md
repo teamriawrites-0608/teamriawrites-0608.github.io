@@ -5,7 +5,7 @@ category: Life Lately
 excerpt: A little escape from the city, with the kind of memories you don't
   really plan for.
 cover_image: /uploads/monteria-village-image.webp
-published: false
+published: true
 ---
 *What if you could spend a day away from the city, experience a little village life, try your hand at traditional activities, swing under a tree, enjoy the monsoon and still have a whole lot of fun? That's pretty much what my visit to Monteria Village in Karjat was like.*
 
