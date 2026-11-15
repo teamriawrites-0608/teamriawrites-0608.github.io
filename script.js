@@ -14,8 +14,7 @@
   const archive = document.querySelector(".archive-list");
   let posts = [];
   let activeFilter = "All";
-  
-}
+
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
     "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
   })[c]);
