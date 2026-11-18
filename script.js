@@ -459,36 +459,85 @@ function renderArticle(post) {
     }
   }
 
-  async function loadPosts() {
-    if (!grid) return;
-    grid.innerHTML = '<p class="loading-note">Opening the diary… ♡</p>';
-    try {
-      const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${POSTS_PATH}?ref=${BRANCH}`;
-      const response = await fetch(url, {headers:{Accept:"application/vnd.github+json"}});
-      if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
-      const files = await response.json();
-      if (!Array.isArray(files)) throw new Error("The article folder response was not a file list.");
-      const markdownFiles = files.filter(f => f.type === "file" && /\.md$/i.test(f.name));
-      const records = await Promise.all(markdownFiles.map(async file => {
-        const r = await fetch(file.download_url);
-        if (!r.ok) return null;
-        const parsed = parseFrontmatter(await r.text());
+
+async function loadPosts() {
+  if (!grid) return;
+
+  grid.innerHTML = '<p class="loading-note">Opening the diary… ♡</p>';
+
+  try {
+    // Get the repository file list through jsDelivr
+    const indexUrl = `https://data.jsdelivr.com/v1/package/gh/${OWNER}/${REPO}@${BRANCH}/flat`;
+
+    const response = await fetch(indexUrl);
+
+    if (!response.ok) {
+      throw new Error(`jsDelivr index returned ${response.status}`);
+    }
+
+    const index = await response.json();
+
+    if (!Array.isArray(index.files)) {
+      throw new Error("The repository file list could not be read.");
+    }
+
+    // Select published-post Markdown files
+    const markdownFiles = index.files.filter(file =>
+      file.name.startsWith(`/${POSTS_PATH}/`) &&
+      /\.md$/i.test(file.name)
+    );
+
+    const records = await Promise.all(
+      markdownFiles.map(async file => {
+        const fileUrl = `https://cdn.jsdelivr.net/gh/${OWNER}/${REPO}@${BRANCH}${file.name}`;
+
+        const result = await fetch(fileUrl);
+
+        if (!result.ok) return null;
+
+        const parsed = parseFrontmatter(await result.text());
+
         if (!parsed) return null;
+
         const published = String(parsed.published).toLowerCase() === "true";
+
         if (!published) return null;
-        return {...parsed, slug:slugFromFile(file.name), title:parsed.title || "Untitled note"};
-      }));
-      posts = records.filter(Boolean).sort((a,b) => (dateObj(b.date)?.getTime() || 0) - (dateObj(a.date)?.getTime() || 0));
-      renderFilters();
-      renderPosts();
-      renderArchive();
-      handleRoute();
-    } catch (error) {
-      console.error("RiaWrites CMS error:", error);
-      grid.innerHTML = '<p class="loading-note">The diary could not load right now. Please refresh in a moment ♡</p>';
-      if (archive) archive.innerHTML = '<p class="archive-loading">The archive could not load right now.</p>';
+
+        const filename = file.name.split("/").pop();
+
+        return {
+          ...parsed,
+          slug: slugFromFile(filename),
+          title: parsed.title || "Untitled note"
+        };
+      })
+    );
+
+    posts = records
+      .filter(Boolean)
+      .sort((a, b) =>
+        (dateObj(b.date)?.getTime() || 0) -
+        (dateObj(a.date)?.getTime() || 0)
+      );
+
+    renderFilters();
+    renderPosts();
+    renderArchive();
+    handleRoute();
+
+  } catch (error) {
+    console.error("RiaWrites CMS error:", error);
+
+    grid.innerHTML =
+      '<p class="loading-note">The diary could not load right now. Please refresh in a moment ♡</p>';
+
+    if (archive) {
+      archive.innerHTML =
+        '<p class="archive-loading">The archive could not load right now.</p>';
     }
   }
+}
+
 
   if (filters) filters.addEventListener("click", event => {
     const button = event.target.closest("button[data-filter]");
