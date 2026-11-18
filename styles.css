@@ -665,3 +665,107 @@ button:hover {
     font-size: 21px;
   }
 }
+
+
+/* RiaWrites — Article sharing */
+
+.article-share {
+  margin: 54px 0 20px;
+  padding: 28px 0 32px;
+  border-top: 1px solid #ded8cb;
+  border-bottom: 1px solid #ded8cb;
+}
+
+.article-share-label {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.article-share h2 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+}
+
+.article-share > p:not(.article-share-label) {
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.article-share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.article-share-actions button,
+.article-share-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 18px;
+  border: 1px solid #c9c2b5;
+  border-radius: 24px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.article-share-actions button:first-child {
+  background: var(--olive);
+  border-color: var(--olive);
+  color: #fff;
+}
+
+.article-share-actions button:hover,
+.article-share-actions a:hover {
+  background: #e9e5db;
+  color: var(--ink);
+}
+
+.article-share-actions button:first-child:hover {
+  background: #414b3d;
+  color: #fff;
+}
+
+.article-share-feedback {
+  display: block;
+  min-height: 18px;
+  margin-top: 12px;
+  color: var(--olive);
+  font-size: 11px;
+}
+
+@media (max-width: 560px) {
+  .article-share {
+    margin-top: 40px;
+    padding: 24px 0;
+  }
+
+  .article-share h2 {
+    font-size: 25px;
+  }
+
+  .article-share-actions {
+    gap: 8px;
+  }
+
+  .article-share-actions button,
+  .article-share-actions a {
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 11px;
+  }
+}
