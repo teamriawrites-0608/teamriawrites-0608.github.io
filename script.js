@@ -299,7 +299,31 @@ function renderArticle(post) {
     <div class="article-body">
       ${markdownToHTML(post.body)}
     </div>
-    
+    <div class="article-share">
+  <p class="article-share-label">SHARE A LITTLE LOVE</p>
+  <h2>Enjoyed this story?</h2>
+  <p>Pass it along to someone who might enjoy it too. ♡</p>
+
+  <div class="article-share-actions">
+    <button type="button" data-share-action="native">
+      Share story ↗
+    </button>
+
+    <a
+      href="https://wa.me/?text=${encodeURIComponent(`${post.title} — ${window.location.href}`)}"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      WhatsApp
+    </a>
+
+    <button type="button" data-share-action="copy">
+      Copy link
+    </button>
+  </div>
+
+  <span class="article-share-feedback" aria-live="polite"></span>
+</div>
     ${recommendationsHTML}
   `;
   // Article sharing actions
