@@ -302,7 +302,44 @@ function renderArticle(post) {
     
     ${recommendationsHTML}
   `;
+  // Article sharing actions
+  const shareFeedback = detail.querySelector(".article-share-feedback");
+  const shareButtons = detail.querySelectorAll("[data-share-action]");
 
+  shareButtons.forEach(button => {
+    button.addEventListener("click", async () => {
+      const action = button.dataset.shareAction;
+      const shareData = {
+        title: post.title,
+        text: `I thought you might enjoy this story: ${post.title}`,
+        url: window.location.href
+      };
+
+      try {
+        if (action === "native") {
+          if (navigator.share) {
+            await navigator.share(shareData);
+          } else {
+            await navigator.clipboard.writeText(shareData.url);
+            if (shareFeedback) {
+              shareFeedback.textContent = "Link copied. Share it with someone ♡";
+            }
+          }
+        }
+
+        if (action === "copy") {
+          await navigator.clipboard.writeText(shareData.url);
+          if (shareFeedback) {
+            shareFeedback.textContent = "Link copied. Ready to share ♡";
+          }
+        }
+      } catch (error) {
+        if (error.name !== "AbortError" && shareFeedback) {
+          shareFeedback.textContent = "Unable to share right now. Please try again.";
+        }
+      }
+    });
+  });
   document.querySelectorAll("main > section").forEach(section => {
     section.hidden = section === detail ? false : true;
   });
