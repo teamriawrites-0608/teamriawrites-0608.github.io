@@ -44,12 +44,20 @@
     return {...meta, body: match[2].trim()};
   }
 
-  function safeUrl(raw) {
-    const value = String(raw || "").trim();
-    if (!value) return "";
-    if (/^(https?:\/\/|\/)/i.test(value)) return value;
-    return "";
+ 
+function safeUrl(raw) {
+  const value = String(raw || "").trim();
+
+  if (!value) return "";
+
+  if (/^https?:\/\//i.test(value)) return value;
+
+  if (/^\/uploads\/[a-zA-Z0-9._/-]+$/.test(value)) {
+    return value;
   }
+
+  return "";
+}
 
   function inlineMarkdown(text) {
     let s = esc(text);
@@ -460,6 +468,162 @@ function renderArticle(post) {
   }
 
 
+  // =========================================
+  // RiaWrites — Featured stories carousel
+  // Uses the five newest published CMS posts
+  // =========================================
+
+  function initFeaturedCarousel() {
+    const carousel = document.querySelector("#featured-carousel");
+    const content = document.querySelector("#featured-content");
+    const dotsContainer = document.querySelector("#featured-dots");
+
+    if (!carousel || !content || !dotsContainer) return;
+
+    const featuredPosts = posts.slice(0, 5);
+    if (!featuredPosts.length) {
+      content.innerHTML = "<p>No published stories yet. ♡</p>";
+      return;
+    }
+
+    let currentIndex = 0;
+    let timer = null;
+    let paused = false;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+
+    const pauseButton = document.createElement("button");
+    pauseButton.type = "button";
+    pauseButton.className = "featured-pause";
+    pauseButton.setAttribute("aria-label", "Pause carousel");
+    pauseButton.textContent = "Ⅱ";
+
+    carousel.appendChild(pauseButton);
+
+    function renderSlide(index) {
+      const post = featuredPosts[index];
+      const image = safeUrl(post.cover_image);
+      const category = esc(post.category || "STORIES");
+      const title = esc(post.title || "Untitled story");
+      const excerpt = esc(post.excerpt || "");
+      const slug = encodeURIComponent(post.slug);
+
+      carousel.style.backgroundImage = image
+        ? `url("${image.replace(/["\\]/g, "\\$&")}")`
+        : "none";
+
+      content.innerHTML = `
+        <p class="eyebrow">FEATURED STORY · ${category}</p>
+        <h2>${title}</h2>
+        <p>${excerpt}</p>
+        <a class="featured-read-link" href="#article=${slug}">
+          Read this story ↗
+        </a>
+      `;
+
+      content.classList.remove("is-entering");
+      void content.offsetWidth;
+      if (!reducedMotion.matches) {
+        content.classList.add("is-entering");
+      }
+
+      dotsContainer.innerHTML = featuredPosts.map((_, i) => `
+        <button
+          type="button"
+          class="featured-dot ${i === index ? "active" : ""}"
+          aria-label="Show featured story ${i + 1}"
+          aria-current="${i === index ? "true" : "false"}"
+          data-slide="${i}">
+        </button>
+      `).join("");
+
+      dotsContainer.querySelectorAll("[data-slide]").forEach(dot => {
+        dot.addEventListener("click", () => {
+          showSlide(Number(dot.dataset.slide));
+          restartTimer();
+        });
+      });
+    }
+
+    function showSlide(index) {
+      currentIndex = (index + featuredPosts.length) % featuredPosts.length;
+      renderSlide(currentIndex);
+    }
+
+    function nextSlide() {
+      showSlide(currentIndex + 1);
+    }
+
+    function previousSlide() {
+      showSlide(currentIndex - 1);
+    }
+
+    function stopTimer() {
+      if (timer) clearInterval(timer);
+      timer = null;
+    }
+
+    function startTimer() {
+      stopTimer();
+
+      if (paused || reducedMotion.matches || featuredPosts.length < 2) return;
+
+      timer = setInterval(nextSlide, 6000);
+    }
+
+    function restartTimer() {
+      startTimer();
+    }
+
+    function pauseCarousel() {
+      paused = true;
+      stopTimer();
+      pauseButton.textContent = "▶";
+      pauseButton.setAttribute("aria-label", "Resume carousel");
+    }
+
+    function resumeCarousel() {
+      paused = false;
+      pauseButton.textContent = "Ⅱ";
+      pauseButton.setAttribute("aria-label", "Pause carousel");
+      startTimer();
+    }
+
+    carousel.querySelector(".featured-prev")?.addEventListener("click", () => {
+      previousSlide();
+      restartTimer();
+    });
+
+    carousel.querySelector(".featured-next")?.addEventListener("click", () => {
+      nextSlide();
+      restartTimer();
+    });
+
+    pauseButton.addEventListener("click", () => {
+      if (paused) resumeCarousel();
+      else pauseCarousel();
+    });
+
+    carousel.addEventListener("mouseenter", stopTimer);
+    carousel.addEventListener("mouseleave", startTimer);
+    carousel.addEventListener("focusin", stopTimer);
+    carousel.addEventListener("focusout", event => {
+      if (!carousel.contains(event.relatedTarget)) startTimer();
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopTimer();
+      else startTimer();
+    });
+
+    reducedMotion.addEventListener?.("change", startTimer);
+
+    showSlide(0);
+    startTimer();
+  }
+
 async function loadPosts() {
   if (!grid) return;
 
@@ -519,7 +683,7 @@ async function loadPosts() {
         (dateObj(b.date)?.getTime() || 0) -
         (dateObj(a.date)?.getTime() || 0)
       );
-
+initFeaturedCarousel();
     renderFilters();
     renderPosts();
     renderArchive();
