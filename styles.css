@@ -924,3 +924,21 @@ button:hover {
   }
 }
 
+
+/* Fix desktop category dropdown hover area */
+@media (min-width: 761px) {
+  .nav-dropdown {
+    padding-bottom: 12px;
+  }
+
+  .category-menu {
+    top: calc(100% - 12px);
+  }
+
+  .nav-dropdown:hover .category-menu,
+  .nav-dropdown:focus-within .category-menu {
+    display: block;
+  }
+}
+
+
