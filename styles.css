@@ -779,3 +779,148 @@ button:hover {
     font-size: 11px;
   }
 }
+
+
+/* RiaWrites — New header and navigation */
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  font-family: "Outfit", sans-serif;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -1.1px;
+  line-height: 1;
+}
+
+.wordmark .logo-ria {
+  color: #53604e;
+}
+
+.wordmark .logo-writes {
+  color: #a45e43;
+}
+
+.wordmark i {
+  margin-left: 5px;
+  color: #a45e43;
+  font-family: var(--sans);
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.nav-links > a,
+.nav-dropdown-toggle {
+  color: #5f6057;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dropdown-arrow {
+  font-size: 15px;
+  transition: transform .2s ease;
+}
+
+.category-menu {
+  position: absolute;
+  top: 100%;
+  left: -18px;
+  z-index: 50;
+  display: none;
+  min-width: 220px;
+  padding: 10px;
+  background: #f8f5ef;
+  border: 1px solid #e5ded2;
+  box-shadow: 0 12px 28px rgba(40, 42, 36, .10);
+}
+
+.category-menu a {
+  display: block;
+  padding: 11px 12px;
+  color: #5f6057;
+  font-size: 12px;
+  transition: background .2s ease, color .2s ease;
+}
+
+.category-menu a:hover {
+  background: #e9e5db;
+  color: #a45e43;
+}
+
+@media (min-width: 761px) {
+  .nav-dropdown:hover .category-menu,
+  .nav-dropdown:focus-within .category-menu {
+    display: block;
+  }
+
+  .nav-dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    position: relative;
+  }
+
+  .nav-links {
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .nav-links > a {
+    display: block;
+    padding: 9px 0;
+  }
+
+  .nav-dropdown-toggle {
+    width: 100%;
+    justify-content: center;
+    padding: 9px 0;
+  }
+
+  .category-menu {
+    position: static;
+    min-width: 0;
+    margin: 5px 0 8px;
+    border: 0;
+    border-top: 1px solid #e5ded2;
+    border-bottom: 1px solid #e5ded2;
+    box-shadow: none;
+    text-align: center;
+  }
+
+  .nav-dropdown.mobile-open .category-menu {
+    display: block;
+  }
+
+  .nav-dropdown.mobile-open .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+}
+
