@@ -571,6 +571,37 @@ async function loadPosts() {
     }));
   }
 
+  // Categories dropdown — mobile tap and category filtering
+  const dropdown = document.querySelector(".nav-dropdown");
+  const dropdownToggle = document.querySelector(".nav-dropdown-toggle");
+
+  if (dropdown && dropdownToggle) {
+    dropdownToggle.addEventListener("click", () => {
+      if (window.matchMedia("(max-width: 760px)").matches) {
+        const isOpen = dropdown.classList.toggle("mobile-open");
+        dropdownToggle.setAttribute("aria-expanded", String(isOpen));
+      }
+    });
+
+    dropdown.querySelectorAll(".category-menu a[data-category]").forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+
+        const category = link.dataset.category;
+
+        location.hash = "latest";
+        applyFilter(category);
+
+        document.querySelector("#latest")?.scrollIntoView({
+          behavior: "smooth"
+        });
+
+        dropdown.classList.remove("mobile-open");
+        dropdownToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
   const year = document.querySelector("#copyright-year");
   if (year) year.textContent = new Date().getFullYear();
   window.addEventListener("hashchange", handleRoute);
