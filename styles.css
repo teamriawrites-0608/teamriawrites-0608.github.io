@@ -2123,3 +2123,33 @@ button:hover {
     font-size: 27px;
   }
 }
+
+/* Match footer wordmark to header logo */
+
+.site-footer .wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  font-family: "Outfit", sans-serif;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -1.1px;
+  line-height: 1;
+}
+
+.site-footer .wordmark .logo-ria {
+  color: #282a24;
+}
+
+.site-footer .wordmark .logo-writes {
+  color: #a45e43;
+}
+
+.site-footer .wordmark i {
+  margin-left: 5px;
+  color: #a45e43;
+  font-family: var(--sans);
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+}
