@@ -2006,3 +2006,7 @@ button:hover {
     font-size: 24px;
   }
 }
+
+.latest-heading h2 {
+  font-weight: 700;
+}
