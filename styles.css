@@ -2153,3 +2153,26 @@ button:hover {
   font-style: normal;
   font-weight: 400;
 }
+
+/* Explore every chapter — slightly larger typography */
+
+.world .section-heading h2 {
+  font-size: clamp(40px, 4.2vw, 52px);
+  font-weight: 800;
+}
+
+.world .section-heading .eyebrow {
+  font-size: 12px;
+}
+
+.world .section-heading .chapter-subtitle {
+  font-size: 16px;
+}
+
+.world .category-card h3 {
+  font-size: 20px;
+}
+
+.world .category-card p {
+  font-size: 13px;
+}
