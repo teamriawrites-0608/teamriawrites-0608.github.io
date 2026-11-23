@@ -2176,3 +2176,27 @@ button:hover {
 .world .category-card p {
   font-size: 13px;
 }
+
+/* Latest Stories — reposition category labels */
+
+.latest-section .post-image {
+  position: relative;
+}
+
+.latest-section .image-stamp {
+  top: 10px;
+  left: 10px;
+  right: auto;
+  bottom: auto;
+  transform: none;
+  width: fit-content;
+  max-width: calc(100% - 20px);
+  padding: 6px 9px;
+  border-radius: 4px;
+  background: rgba(248, 245, 239, 0.92);
+  color: #53604e;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  z-index: 2;
+}
