@@ -1382,3 +1382,13 @@ button:hover {
     padding: 8px 10px;
   }
 }
+
+/* Stories page – collection label */
+.stories-intro .eyebrow {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--olive);
+}
