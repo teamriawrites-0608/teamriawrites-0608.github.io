@@ -1216,3 +1216,75 @@ button:hover {
     transform: translateX(0);
   }
 }
+
+
+/* Homepage About Us teaser */
+.about-teaser {
+  margin: 24px auto 40px;
+  padding: 48px 40px;
+  background: #f5eee7;
+  border-radius: 28px;
+  text-align: center;
+}
+
+.about-teaser-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.about-teaser .eyebrow {
+  color: #53604e;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.about-teaser h2 {
+  color: #282a24;
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+
+.about-teaser h2 em {
+  color: #b96b58;
+}
+
+.about-teaser-content > p:not(.eyebrow) {
+  color: #77776c;
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 0 auto 24px;
+}
+
+.about-teaser .button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 24px;
+  border-radius: 30px;
+  background: #53604e;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.about-teaser .button:hover {
+  background: #414c3c;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .about-teaser {
+    margin: 20px 16px 32px;
+    padding: 36px 22px;
+  }
+
+  .about-teaser h2 {
+    font-size: 30px;
+  }
+}
