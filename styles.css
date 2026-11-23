@@ -1475,3 +1475,49 @@ button:hover {
     font-size: 10px;
   }
 }
+
+
+/* About page — welcoming introduction */
+
+#about .about-intro-label {
+  margin: 0 0 22px;
+  color: var(--olive);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .2em;
+}
+
+#about .about-intro-copy {
+  max-width: 580px;
+  margin: 22px 0 0;
+  color: #68685f;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+#about .about-scroll-cue {
+  margin: 28px 0 0;
+  color: var(--olive);
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .16em;
+}
+
+@media (max-width: 600px) {
+  #about .about-intro-label {
+    font-size: 10px;
+    margin-bottom: 17px;
+  }
+
+  #about .about-intro-copy {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  #about .about-scroll-cue {
+    margin-top: 22px;
+  }
+}
