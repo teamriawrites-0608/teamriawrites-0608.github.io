@@ -1521,3 +1521,10 @@ button:hover {
     margin-top: 22px;
   }
 }
+
+/* Hide decorative circle on mobile About page */
+@media (max-width: 560px) {
+  #about.about-editorial::before {
+    display: none;
+  }
+}
