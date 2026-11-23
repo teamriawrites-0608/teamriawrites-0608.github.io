@@ -1288,3 +1288,26 @@ button:hover {
     font-size: 30px;
   }
 }
+
+/* RiaWrites — compact mobile navigation */
+@media (max-width: 760px) {
+  .nav-links {
+    padding: 12px 20px 16px;
+    gap: 4px;
+  }
+
+  .nav-links > a,
+  .nav-dropdown-toggle {
+    padding: 7px 0;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .category-menu {
+    margin: 3px 0 5px;
+  }
+
+  .category-menu a {
+    padding: 8px 10px;
+  }
+}
