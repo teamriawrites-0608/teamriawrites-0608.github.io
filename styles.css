@@ -39,6 +39,17 @@
   .nav-links { display: none; position: absolute; z-index: 20; top: 71px; left: 0; right: 0; padding: 18px 24px 22px; background: var(--paper); border-bottom: 1px solid #e8e2d8; flex-direction: column; gap: 16px; }
   .nav-links.open { display: flex; }
   .header-note { display: none; }
+
+  @media (max-width: 600px) {
+  .stories-intro h1 {
+    font-size: clamp(30px, 8vw, 34px);
+    line-height: 1.15;
+  }
+
+  .stories-intro h1 em {
+    white-space: nowrap;
+  }
+}
   .wrap { width: min(var(--max), calc(100% - 40px)); }
   .about-section { grid-template-columns: 1fr; gap: 38px; padding-top: 70px; padding-bottom: 72px; }
   .about-photo, .about-surya-photo { height: min(420px, 90vw); margin: 0 7% 0 0; }
