@@ -1807,3 +1807,66 @@ button:hover {
 }
 
 }
+
+/* Explore every chapter — heading refresh */
+
+.chapter-heading {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.chapter-heading > div {
+  width: 100%;
+  text-align: center;
+}
+
+.chapter-heading .eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  margin-bottom: 12px;
+}
+
+.chapter-heading .eyebrow::before,
+.chapter-heading .eyebrow::after {
+  content: "";
+  width: 100px;
+  height: 1px;
+  background: #d8d1c5;
+}
+
+.chapter-heading h2 {
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 12px;
+}
+
+.chapter-heading .chapter-subtitle {
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+  margin: 0;
+  color: var(--ink);
+}
+
+@media (max-width: 600px) {
+  .chapter-heading .eyebrow::before,
+  .chapter-heading .eyebrow::after {
+    width: 45px;
+  }
+
+  .chapter-heading h2 {
+    font-size: 30px;
+  }
+
+  .chapter-heading .chapter-subtitle {
+    font-size: 13px;
+    padding: 0 12px;
+  }
+}
