@@ -1,1 +1,181 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f5ef">
+
+  <meta name="description" content="Meet Ria and Surya, the people behind RiaWrites — a personal journal about life's experiences, thoughts and little moments.">
+
+  <title>About Us — RiaWrites</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@800&family=Playfair+Display:wght@400;500;600;700&family=Allura&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="site-header">
+  <a class="wordmark" href="index.html#home" aria-label="RiaWrites home">
+    <span class="logo-ria">Ria</span><span class="logo-writes">Writes</span><i>♡</i>
+  </a>
+
+  <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+
+  <nav class="nav-links" aria-label="Main navigation">
+    <a href="about.html" aria-current="page">About Us</a>
+    <a href="index.html#diary">Categories</a>
+    <a href="stories.html">Stories</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="about-section about-editorial" id="about">
+    <div class="editorial-inner">
+
+      <div class="editorial-heading">
+        <div class="editorial-title">
+          The people<br>
+          behind <em>the screen</em>
+        </div>
+
+        <div class="editorial-accent">
+          <span></span><span></span>
+        </div>
+      </div>
+
+      <div class="editorial-layout">
+
+        <div class="editorial-people">
+
+          <article class="editorial-person">
+            <div class="editorial-number">01</div>
+
+            <div class="editorial-person-copy">
+              <h3>Ria</h3>
+              <p class="editorial-role">The Creative Mind</p>
+
+              <p>
+                I'm Ria, I collect what I'm learning, figuring
+                out, and eating — giving heart and stories to the everyday
+                moments that make life special.
+              </p>
+
+              <p>
+                I believe the little things often become the stories we
+                remember most. Whether it's a new experience, a thought
+                that stays with me, something worth sharing, or simply an
+                ordinary day, I find joy in putting it into words.
+                This space is where my thoughts find a home, one story at a time.
+              </p>
+            </div>
+          </article>
+
+          <article class="editorial-person">
+            <div class="editorial-number">02</div>
+
+            <div class="editorial-person-copy">
+              <h3>Surya</h3>
+              <p class="editorial-role">The Technical Mind</p>
+
+              <p>
+                I'm Surya, I take care of the digital architecture,
+                technology, and backend that bring this space to life.
+              </p>
+
+              <p>
+                While Ria fills these pages with stories, thoughts, and
+                experiences, I work behind the scenes to build and maintain
+                the space that brings them together. From the design to
+                the little details that make the website work, I enjoy
+                turning an idea into something people can experience.
+              </p>
+            </div>
+          </article>
+
+        </div>
+
+        <aside class="editorial-aside">
+
+          <p class="editorial-aside-heading">
+            A little more<br>about us
+          </p>
+
+          <div class="editorial-accent">
+            <span></span><span></span>
+          </div>
+
+          <p class="editorial-aside-intro">
+            RiaWrites is our shared space — a growing collection of
+            moments, ideas, lessons, discoveries, and pieces of everyday
+            life. A place where we can document experiences, share what
+            we learn, and keep the memories we never want to lose.
+          </p>
+
+          <p class="editorial-aside-note">
+            We're building this one story at a time, and we're glad
+            you've found your way here.
+          </p>
+
+          <div class="editorial-quote">
+            <span class="editorial-quote-mark">“</span>
+            <p>
+              She brings the stories to life.<br>
+              He builds the space that holds them.
+            </p>
+          </div>
+
+          <div class="editorial-welcome">
+            Welcome to RiaWrites. ♡
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <a class="wordmark" href="index.html#home">
+    <span class="logo-ria">Ria</span><span class="logo-writes">Writes</span><i>♡</i>
+  </a>
+
+  <p>A little diary for the big dreams and everyday moments.</p>
+
+  <div class="footer-links">
+    <a href="index.html#home">Back to home ↑</a>
+    <a href="mailto:team.riawrites@gmail.com">Contact</a>
+  </div>
+
+  <small>© 2026 Ria Writes · Made with a little love ♡</small>
+</footer>
+
+<script>
+  const menuToggle = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  menuToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+</script>
+
+</body>
+</html>
+
