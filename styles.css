@@ -1528,3 +1528,92 @@ button:hover {
     display: none;
   }
 }
+
+/* RiaWrites — Explore my world refresh */
+
+.world .category-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.world .category-card,
+.world .category-card:nth-child(4),
+.world .category-card:nth-child(5) {
+  grid-column: auto;
+  min-height: 190px;
+  padding: 22px 15px 18px;
+  border-radius: 18px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.world .card-number {
+  display: none;
+}
+
+.world .category-icon {
+  position: static;
+  display: block;
+  font-size: 34px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.world .category-card h3 {
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+.world .category-card p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.world .card-arrow {
+  position: static;
+  display: block;
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: 21px;
+}
+
+@media (max-width: 900px) {
+  .world .category-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .world .category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .world .category-card,
+  .world .category-card:nth-child(4),
+  .world .category-card:nth-child(5) {
+    min-height: 185px;
+    padding: 20px 12px 16px;
+  }
+
+  .world .category-card h3 {
+    font-size: 16px;
+  }
+
+  .world .category-card p {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .world .category-grid {
+    grid-template-columns: 1fr;
+  }
+}
