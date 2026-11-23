@@ -1,0 +1,133 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f5ef">
+  <meta name="description" content="Explore all stories, thoughts and little discoveries from RiaWrites.">
+  <title>Stories — RiaWrites</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@800&family=Playfair+Display:wght@400;500;600;700&family=Allura&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+
+<header class="site-header">
+  <a class="wordmark" href="index.html#home" aria-label="RiaWrites home">
+    <span class="logo-ria">Ria</span><span class="logo-writes">Writes</span><i>♡</i>
+  </a>
+
+  <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+
+  <nav class="nav-links" aria-label="Main navigation">
+    <a href="about.html">About Us</a>
+    <a href="index.html#diary">Categories</a>
+    <a href="stories.html" aria-current="page">Stories</a>
+  </nav>
+</header>
+
+<main id="stories-page">
+
+  <section class="stories-intro wrap">
+    <p class="eyebrow">THE RIaWRITES COLLECTION</p>
+    <h1>Stories, thoughts &<br><em>little discoveries.</em></h1>
+    <p class="stories-description">
+      Every story has a place here. Take your time, look around,
+      and find something that speaks to you. ♡
+    </p>
+  </section>
+
+  <section class="stories-list-section">
+    <div class="wrap">
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">FRESH FROM THE NOTEBOOK</p>
+          <h2>All the <em>stories</em></h2>
+        </div>
+        <p class="section-aside">A growing collection of moments,<br>memories and everything in between.</p>
+      </div>
+
+      <div class="stories-search">
+        <label class="sr-only" for="stories-search-input">Search stories</label>
+        <input id="stories-search-input" type="search" placeholder="Search stories...">
+      </div>
+
+      <div class="filter-row" aria-label="Filter stories">
+        <button class="filter active" type="button" data-filter="All" aria-pressed="true">Everything</button>
+        <button class="filter" type="button" data-filter="Dear Me" aria-pressed="false">Dear Me</button>
+        <button class="filter" type="button" data-filter="Work in Progress" aria-pressed="false">Work in Progress</button>
+        <button class="filter" type="button" data-filter="Little Things" aria-pressed="false">Little Things</button>
+        <button class="filter" type="button" data-filter="Figuring It Out" aria-pressed="false">Figuring It Out</button>
+        <button class="filter" type="button" data-filter="Life Lately" aria-pressed="false">Life Lately</button>
+      </div>
+
+      <div class="post-grid" aria-live="polite">
+        <p class="loading-note">Gathering all the stories… ♡</p>
+      </div>
+
+      <p class="empty-state" hidden>No stories found. Try another search or chapter. ♡</p>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <a class="wordmark" href="index.html#home">
+    <span class="logo-ria">Ria</span><span class="logo-writes">Writes</span><i>♡</i>
+  </a>
+
+  <p>A little diary for the big dreams and everyday moments.</p>
+
+  <div class="footer-links">
+    <a href="index.html#home">Back to home ↑</a>
+    <a href="mailto:team.riawrites@gmail.com">Contact</a>
+  </div>
+
+  <small>© 2026 Ria Writes · Made with a little love ♡</small>
+</footer>
+
+<script>
+  const menuToggle = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  menuToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  const searchInput = document.querySelector("#stories-search-input");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+
+    document.querySelectorAll(".post-card").forEach(card => {
+      const matches = card.textContent.toLowerCase().includes(query);
+      card.hidden = !matches;
+    });
+
+    const visible = [...document.querySelectorAll(".post-card")]
+      .some(card => !card.hidden);
+
+    document.querySelector(".empty-state").hidden = visible;
+  });
+</script>
+
+</body>
+</html>
